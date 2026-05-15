@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - GameZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        /* حاوية الخلفية بعرض الصفحة */
+        .login-wrap {
+            height: 100%;
+            width: 100%;
+            background-image: url('images/login-bg.png.jpg'); /* مسار صورتك الـ Arcade */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* الحاوية الأفقية للعنوان والدراعات النيون */
+        .title-container {
+            display: flex;
+            align-items: center;
+            gap: 25px; /* المسافة بين الدراع والكلمة */
+            margin-bottom: 25px; 
+            margin-top: -30px; 
+        }
+
+        /* تنسيق دراعات النيون البروفيشينال بدون أي مربعات بيضاء */
+        .neon-controller {
+            font-size: 50px; /* حجم الدراع الشيك */
+            color: #fff;
+            /* توهج نيون أزرق وبنفسجي مفرغ تماماً */
+            text-shadow: 0 0 10px #00FFFF, 
+                         0 0 20px #00FFFF, 
+                         0 0 40px #a855f7;
+            animation: breathe 3s infinite alternate ease-in-out;
+        }
+
+        /* تصميم كلمة GameZone الكبيرة العلوية */
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 55px; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #fff;
+            margin: 0; 
+            text-align: center;
+            /* سر التوهج والـ Neon Glow */
+            text-shadow: 0 0 10px #a855f7, 
+                         0 0 20px #a855f7, 
+                         0 0 40px #38bdf8, 
+                         0 0 80px #38bdf8;
+            animation: pulse-glow 2s infinite alternate ease-in-out; 
+        }
+
+        /* أنيميشن نبض النيون للكلمة */
+        @keyframes pulse-glow {
+            from {
+                text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 40px #38bdf8;
+            }
+            to {
+                text-shadow: 0 0 15px #a855f7, 0 0 30px #a855f7, 0 0 60px #38bdf8, 0 0 90px #38bdf8;
+            }
+        }
+
+        /* أنيميشن الحركية للدراعات */
+        @keyframes breathe {
+            from { transform: scale(1); opacity: 0.9; }
+            to { transform: scale(1.08); opacity: 1; }
+        }
+
+        /* صندوق الزجاج الشفاف الاحترافي */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 30px rgba(168, 85, 247, 0.35); 
+            width: 380px;
+            text-align: center;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .glass-box h2 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        .glass-box h2 span {
+            color: #a855f7;
+        }
+
+        .glass-box p {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        /* تصميم الخانات */
+        .input-group input {
+            width: 100%;
+            padding: 14px 45px 14px 14px;
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid #14b8a6; 
+            color: white;
+            border-radius: 8px;
+            outline: none;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #a855f7;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+        }
+
+        /* أيقونة العين */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .toggle-password:hover {
+            color: #38bdf8;
+        }
+
+        /* زرار الـ Sign In البنفسجي */
+        .login-button {
+            width: 100%;
+            background-color: #a855f7;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+            margin-top: 10px;
+        }
+
+        .login-button:hover {
+            background-color: #9333ea;
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+        }
+
+        #loginError {
+            color: #ef4444;
+            font-size: 13px;
+            margin: -10px 0 15px 0;
+            text-align: left;
+            min-height: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrap">
+        <div class="title-container">
+            <i class="fas fa-gamepad neon-controller"></i>
+            
+            <h1 class="main-title">GAMEZONE</h1>
+            
+            <i class="fas fa-gamepad neon-controller"></i>
+        </div>
+
+        <div class="glass-box">
+            <h2>Welcome to <span>GameZone</span></h2>
+            <p>Login to access your gaming gear</p>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="email" id="loginEmail" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="button" class="toggle-password" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <p id="loginError"></p>
+                
+                <button type="submit" class="login-button">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('loginPassword');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                }
+            });
+        }
+
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let email = document.getElementById('loginEmail').value;
+                let password = document.getElementById('loginPassword').value;
+                let errorMsg = document.getElementById('loginError');
+
+                if (email === "admin@gamezone.com" && password === "123456") {
+                    let name = email.split('@')[0];
+                    localStorage.setItem("loggedInUser", name);
+                    window.location.href = "products.html"; 
+                } else {
+                    if (errorMsg) {
+                        errorMsg.innerHTML = "Invalid credentials! (admin@gamezone.com / 123456)";
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

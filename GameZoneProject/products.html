@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - GameZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b111e;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 🌟 كود الأنميشن السحري للدخلة الفخمة 🌟 */
+        @keyframes pageFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-content {
+            animation: pageFadeIn 0.8s ease-out forwards;
+        }
+
+        /* 🌟 تنسيق الـ Navbar الثابت 🌟 */
+        .navbar {
+            background-color: #0f172a;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: #38bdf8;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #38bdf8;
+        }
+
+        .welcome-user {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-right: 15px;
+        }
+
+        .welcome-user b {
+            color: #a855f7;
+        }
+
+        .cart-status {
+            background-color: #a855f7;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(168, 85, 247, 0.3);
+            transition: 0.3s;
+        }
+
+        .main-heading {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            margin: 40px 0 20px 0;
+            letter-spacing: 2px;
+        }
+
+        /* 🌟 تنسيق جداول العرض 🌟 */
+        .table-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #0f172a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        th {
+            background-color: #38bdf8;
+            color: #0b111e;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            padding: 15px;
+            text-align: center;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .product-name-cell {
+            color: #a855f7;
+            font-weight: bold;
+        }
+
+        .price-cell {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .stock-cell {
+            font-weight: bold;
+        }
+
+        .game-icon-placeholder {
+            font-size: 20px;
+            color: #a855f7;
+            text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+        }
+
+        .add-to-cart-btn {
+            background-color: #a855f7;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #9333ea;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+        }
+
+        .add-to-cart-btn:disabled {
+            background-color: #4b5563;
+            color: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* 🌟 قسم السلة المحددة (Cart Section) تحت خالص 🌟 */
+        .cart-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 80px auto 20px auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .cart-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: #a855f7;
+            margin: 0;
+        }
+
+        .action-buttons-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .clear-cart-btn {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .clear-cart-btn:hover {
+            background-color: #dc2626;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .restock-btn {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .restock-btn:hover {
+            background-color: #059669;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .qty-btn {
+            background-color: #1e293b;
+            border: 1px solid #475569;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .qty-btn.minus:hover {
+            background-color: #ef4444;
+            border-color: #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+        }
+
+        .qty-btn.plus:hover {
+            background-color: #10b981;
+            border-color: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+
+        .qty-value {
+            display: inline-block;
+            width: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .cart-actions-box {
+            max-width: 1200px;
+            margin: 30px auto 60px auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+        }
+
+        .order-now-btn {
+            background: linear-gradient(90deg, #38bdf8, #a855f7);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+            transition: 0.3s ease-in-out;
+        }
+
+        .order-now-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+
+        .total-price-badge {
+            display: inline-block;
+            background-color: #0f172a;
+            border: 1px solid #a855f7;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .total-price-badge span {
+            color: #10b981;
+        }
+
+        /* 🌟 تنسيق الـ Custom Modal 🌟 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(11, 17, 30, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .game-modal {
+            background-color: #0f172a;
+            border: 2px solid #38bdf8;
+            border-radius: 16px;
+            padding: 35px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            transform: scale(0.8);
+            transition: 0.3s ease-in-out;
+        }
+
+        .modal-overlay.active .game-modal {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 55px;
+            color: #10b981;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+
+        .game-modal.error-modal {
+            border-color: #ef4444;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+        }
+        
+        .game-modal.error-modal .modal-icon {
+            color: #ef4444;
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        }
+
+        .game-modal.error-modal .modal-title {
+            color: #ef4444;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            color: #38bdf8;
+            margin: 0 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        .modal-text {
+            font-size: 16px;
+            color: #e5e7eb;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .modal-text b {
+            color: #a855f7;
+        }
+
+        .modal-text span {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .modal-btn {
+            background-color: #a855f7;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(168, 85, 247, 0.3);
+        }
+
+        .modal-btn:hover {
+            background-color: #9333ea;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+        }
+
+        /* 🌟 الفوتر الاحترافي 🌟 */
+        .game-footer {
+            background-color: #0f172a;
+            width: 100%;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .game-footer p {
+            margin: 0;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: #9ca3af;
+            font-size: 18px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            color: #38bdf8;
+            text-shadow: 0 0 10px #38bdf8;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">GameZone</a>
+        <div class="nav-links">
+            <span class="welcome-user">Welcome, <b id="welcomeMessage">Admin</b>! 🎮</span>
+            <a href="index.html">Home</a>
+            <a href="products.html" class="active">Products</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About</a>
+            <a href="products.html" class="cart-status" id="cartCountNav">My Cart 🛒 (0)</a>
+        </div>
+    </nav>
+
+    <div class="animated-content">
+        <h1 class="main-heading">Gaming Products</h1>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="cart-title-container">
+            <h2 class="cart-heading"><i class="fas fa-shopping-cart"></i> Your Selected Cart Items</h2>
+            <div class="action-buttons-group">
+                <button class="restock-btn" onclick="restockAllProducts()">Restock Admin <i class="fas fa-sync-alt"></i></button>
+                <button class="clear-cart-btn" onclick="clearCart()">Clear Cart <i class="fas fa-trash-alt"></i></button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="cart-actions-box">
+            <button class="order-now-btn" onclick="checkoutOrder()">Order Now <i class="fas fa-rocket"></i></button>
+            <div class="total-price-badge">
+                Total Price: <span id="totalPriceNav">$0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="game-modal" id="modalContainer">
+            <div class="modal-icon" id="modalIcon"><i class="fas fa-check-circle"></i></div>
+            <div class="modal-title" id="modalTitle">ORDER PLACED!</div>
+            <div class="modal-text" id="modalDynamicText">
+                GG, <b>Admin</b>! Your order has been placed successfully.<br>
+                Total Amount: <span>$0</span>
+            </div>
+            <button class="modal-btn" id="modalBtn" onclick="closeModal()">OK, GG! 🎮</button>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <p>&copy; 2026 GameZone. All Rights Reserved. Designed for Gamers 🎮</p>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        let defaultProducts = [
+            { id: 1, name: "PlayStation 5 Controller", category: "Gaming Gear", price: 70, stock: 15 },
+            { id: 2, name: "Gaming Mouse RGB", category: "Gaming Gear", price: 50, stock: 20 },
+            { id: 3, name: "Mechanical Keyboard", category: "Gaming Gear", price: 100, stock: 12 },
+            { id: 4, name: "Gaming Headset 7.1", category: "Gaming Gear", price: 80, stock: 18 },
+            { id: 5, name: "Gaming Chair", category: "Gaming Gear", price: 250, stock: 8 }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('gameZoneProducts')) || defaultProducts;
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        let currentModalType = "success"; 
+
+        function saveProductsToStorage() {
+            localStorage.setItem('gameZoneProducts', JSON.stringify(products));
+        }
+
+        function showCustomAlert(title, text, type = "success") {
+            currentModalType = type;
+            const modalContainer = document.getElementById('modalContainer');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalDynamicText');
+            const modalBtn = document.getElementById('modalBtn');
+
+            if (type === "error") {
+                modalContainer.classList.add('error-modal');
+                modalIcon.innerHTML = `<i class="fas fa-exclamation-triangle"></i>`;
+                modalBtn.innerText = "Back to Game 🎮";
+            } else {
+                modalContainer.classList.remove('error-modal');
+                modalIcon.innerHTML = `<i class="fas fa-check-circle"></i>`;
+                modalBtn.innerText = "OK, GG! 🎮";
+            }
+
+            modalTitle.innerText = title;
+            modalText.innerHTML = text;
+            document.getElementById('customModal').classList.add('active');
+        }
+
+        function restockAllProducts() {
+            if(confirm("Do you want to restock all items back to default levels? 🎮")) {
+                products = JSON.parse(JSON.stringify(defaultProducts));
+                saveProductsToStorage();
+                updateCartUI();
+                showCustomAlert("RESTOCKED!", "All products have been restocked back to initial levels successfully! 🚀", "success");
+            }
+        }
+
+        function displayProducts() {
+            const tableBody = document.getElementById('productsTableBody');
+            tableBody.innerHTML = '';
+
+            products.forEach(product => {
+                let cartItem = cart.find(item => item.name === product.name);
+                let currentStock = product.stock - (cartItem ? cartItem.quantity : 0);
+                if(currentStock < 0) currentStock = 0;
+
+                let isBtnDisabled = currentStock <= 0 ? 'disabled' : '';
+                let btnText = currentStock <= 0 ? 'Out of Stock' : 'Add to Cart';
+
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${product.id}</td>
+                        <td><span class="game-icon-placeholder"><i class="fas fa-gamepad"></i></span></td>
+                        <td class="product-name-cell">${product.name}</td>
+                        <td>${product.category}</td>
+                        <td class="price-cell">$${product.price}</td>
+                        <td class="stock-cell" id="stock-${product.id}">${currentStock}</td>
+                        <td>
+                            <button class="add-to-cart-btn" ${isBtnDisabled} onclick="addToCart('${product.name}', ${product.price}, ${product.id})">
+                                ${btnText}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function addToCart(name, price, id) {
+            let originalProduct = products.find(p => p.id === id);
+            let cartItem = cart.find(item => item.name === name);
+            let currentQuantityInCart = cartItem ? cartItem.quantity : 0;
+
+            if (currentQuantityInCart < originalProduct.stock) {
+                if (cartItem) {
+                    cartItem.quantity += 1;
+                } else {
+                    cart.push({ name: name, price: price, quantity: 1 });
+                }
+                localStorage.setItem('cartItems', JSON.stringify(cart));
+                updateCartUI();
+            } else {
+                showCustomAlert("OUT OF STOCK!", `Sorry, <b>${name}</b> is fully out of stock right now! 🛑`, "error");
+            }
+        }
+
+        function updateCartUI() {
+            const cartTableBody = document.getElementById('cartTableBody');
+            cartTableBody.innerHTML = '';
+
+            let totalPrice = 0;
+            let totalItemsCount = 0;
+
+            cart.forEach((item, index) => {
+                totalPrice += (item.price * item.quantity);
+                totalItemsCount += item.quantity;
+
+                cartTableBody.innerHTML += `
+                    <tr>
+                        <td class="product-name-cell">${item.name}</td>
+                        <td class="price-cell">$${item.price}</td>
+                        <td>
+                            <button class="qty-btn minus" onclick="changeQuantity(${index}, -1)">-</button>
+                            <span class="qty-value">${item.quantity}</span>
+                            <button class="qty-btn plus" onclick="changeQuantity(${index}, 1)">+</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('totalPriceNav').innerText = `$${totalPrice}`;
+            document.getElementById('cartCountNav').innerText = `My Cart 🛒 (${totalItemsCount})`;
+
+            displayProducts();
+        }
+
+        function changeQuantity(index, change) {
+            let cartItem = cart[index];
+            let originalProduct = products.find(p => p.name === cartItem.name);
+
+            if (change === 1) {
+                if (cartItem.quantity < originalProduct.stock) {
+                    cartItem.quantity += 1;
+                } else {
+                    showCustomAlert("LIMIT REACHED!", `Cannot add more! Only <b>${originalProduct.stock}</b> items available in total stock. 🛑`, "error");
+                }
+            } else if (change === -1) {
+                cartItem.quantity += change;
+                if (cartItem.quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function clearCart() {
+            if(confirm("Are you sure you want to clear your cart?")) {
+                cart = [];
+                localStorage.removeItem('cartItems');
+                updateCartUI();
+            }
+        }
+
+        function checkoutOrder() {
+            if (cart.length === 0) {
+                showCustomAlert(
+                    "CART IS EMPTY!", 
+                    "Your cart is empty! Add some awesome gaming items first before checking out. 🎮", 
+                    "error"
+                );
+                return;
+            }
+
+            cart.forEach(cartItem => {
+                let product = products.find(p => p.name === cartItem.name);
+                if (product) {
+                    product.stock -= cartItem.quantity;
+                    if (product.stock < 0) product.stock = 0;
+                }
+            });
+
+            saveProductsToStorage();
+
+            let loggedInUser = localStorage.getItem("loggedInUser") || "Gamer";
+            let totalPrice = document.getElementById('totalPriceNav').innerText;
+
+            showCustomAlert(
+                "ORDER PLACED!", 
+                `GG, <b>${loggedInUser}</b>! Your order has been placed successfully.<br>Total Amount: <span>${totalPrice}</span><br>The items have been secured and deducted from stock! 🚀`, 
+                "success"
+            );
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.remove('active');
+            if (currentModalType === "success") {
+                cart = [];
+                localStorage.removeItem('cartItems');
+                updateCartUI();
+            }
+        }
+
+        window.onload = function() {
+            let loggedInUser = localStorage.getItem("loggedInUser");
+            let welcomeMessage = document.getElementById("welcomeMessage");
+            if (welcomeMessage && loggedInUser) {
+                welcomeMessage.innerText = loggedInUser;
+            }
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>

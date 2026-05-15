@@ -1,0 +1,33 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "PlayStation 5 Controller",
+      "price": 70,
+      "category": "Controllers",
+      "image": "ps5-controller.jpg",
+      "description": "Wireless controller with haptic feedback and dynamic trigger effects.",
+      "stock": 15
+    },
+    {
+      "id": "2",
+      "name": "Mechanical Gaming Keyboard",
+      "price": 120,
+      "category": "Keyboards",
+      "image": "keyboard.jpg",
+      "description": "RGB Backlit mechanical keyboard with blue switches.",
+      "stock": 8
+    },
+    {
+      "id": "3",
+      "name": "Gaming Mouse 16000 DPI",
+      "price": 50,
+      "category": "Mice",
+      "image": "mouse.jpg",
+      "description": "Ultra-lightweight ergonomic gaming mouse with programmable buttons.",
+      "stock": 20
+    }
+  ],
+  "cart": [],
+  "messages": []
+}
